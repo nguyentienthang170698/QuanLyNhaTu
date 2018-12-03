@@ -5,19 +5,59 @@
  */
 package project2;
 
+import project2.data.Register;
+import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author Admin
  */
 public class dang_ky_TK_moi extends javax.swing.JFrame {
 
-    /**
-     * Creates new form dang_ky_TK_moi
-     */
     public dang_ky_TK_moi() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
+    private void DangKyTk(java.awt.event.MouseEvent evt) {                        
+        register();
+    } 
+    private void register(){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9._-]{6,20}$");
+        //Pattern pattern1 = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Pattern pattern2 = Pattern.compile("^[a-zA-Z0-9._-]{6,20}$");
+        String username = TF_ten_TK.getText();
+        Matcher matcher = pattern.matcher(username);
+        
+        char[] pass1 = PASS_MK.getPassword();
 
+        Matcher matcher2 = pattern2.matcher(String.valueOf(pass1));
+        char[] pass2 = PASS_MK.getPassword();
+        if (matcher.matches() == false) {
+            TF_ten_TK.requestFocusInWindow();
+            jLabel2.setText("Nhập sai định dạng!");
+        }
+        if (matcher2.matches() == false) {
+            PASS_MK.requestFocusInWindow();
+            //jLabel4.setText("Nhập sai định dạng!");
+        } else if (!String.valueOf(pass1).equals(String.valueOf(pass2))) {
+            PASS_MK.requestFocusInWindow();
+           // jLabel5.setText("Mật khẩu phải khớp ở trên!");
+        }
+        if (matcher.matches() == true && matcher2.matches() == true && String.valueOf(pass1).equals(String.valueOf(pass2))) {
+
+            Register registerDAO = new Register();
+            if (registerDAO.regis(username, String.valueOf(pass1),txtSoHieu.getText(),txtHoTen.getText()) == true) {
+                lbError.setText("Đăng ký thành công!!");
+                FormDangNhap dangnhap = new FormDangNhap();
+                dangnhap.setVisible(true);
+                this.dispose();
+            } else {
+                lbError.setText("Đã có người dùng này trong Database!!");
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,8 +77,11 @@ public class dang_ky_TK_moi extends javax.swing.JFrame {
         label_tenTK1 = new java.awt.Label();
         PASS_MK = new javax.swing.JPasswordField();
         Pass_MK2 = new javax.swing.JPasswordField();
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\12321321321312312.jpg")); // NOI18N
+        txtSoHieu = new javax.swing.JPasswordField();
+        lbSoHieu = new java.awt.Label();
+        txtHoTen = new javax.swing.JPasswordField();
+        lbHoTen = new java.awt.Label();
+        lbError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("YEAH");
@@ -53,11 +96,60 @@ public class dang_ky_TK_moi extends javax.swing.JFrame {
         label_nhaplaimk1.setText("Nhập lại mật khẩu :");
 
         button_create.setText("Create");
+        button_create.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DangKy(evt);
+            }
+        });
+        button_create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_createActionPerformed(evt);
+            }
+        });
 
         button_cancel.setText("Cancel");
+        button_cancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Button_home(evt);
+            }
+        });
+
+        TF_ten_TK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_ten_TKActionPerformed(evt);
+            }
+        });
 
         label_tenTK1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         label_tenTK1.setText("ĐĂNG KÝ TÀI KHOẢN");
+
+        PASS_MK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PASS_MKActionPerformed(evt);
+            }
+        });
+
+        Pass_MK2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Pass_MK2ActionPerformed(evt);
+            }
+        });
+
+        txtSoHieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSoHieuActionPerformed(evt);
+            }
+        });
+
+        lbSoHieu.setText("Số hiệu");
+
+        txtHoTen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHoTenActionPerformed(evt);
+            }
+        });
+
+        lbHoTen.setText("Họ tên");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,12 +174,20 @@ public class dang_ky_TK_moi extends javax.swing.JFrame {
                         .addGap(129, 129, 129)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_nhaplaimk1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_MK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label_MK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbSoHieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PASS_MK, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoTen)
+                            .addComponent(txtSoHieu)
+                            .addComponent(PASS_MK)
                             .addComponent(Pass_MK2))))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(145, 145, 145))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(lbError, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,15 +208,65 @@ public class dang_ky_TK_moi extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(label_nhaplaimk1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Pass_MK2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(100, 100, 100)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(lbSoHieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSoHieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(lbHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button_create)
                     .addComponent(button_cancel))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(lbError)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TF_ten_TKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_ten_TKActionPerformed
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            register();
+//        }
+    }//GEN-LAST:event_TF_ten_TKActionPerformed
+
+    private void PASS_MKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PASS_MKActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_PASS_MKActionPerformed
+
+    private void Pass_MK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pass_MK2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Pass_MK2ActionPerformed
+
+    private void DangKy(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DangKy
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DangKy
+
+    private void Button_home(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button_home
+        // TODO add your handling code here:
+            this.dispose();
+    }//GEN-LAST:event_Button_home
+
+    private void button_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_createActionPerformed
+        register();
+    }//GEN-LAST:event_button_createActionPerformed
+
+    private void txtSoHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoHieuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSoHieuActionPerformed
+
+    private void txtHoTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoTenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoTenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,5 +314,10 @@ public class dang_ky_TK_moi extends javax.swing.JFrame {
     private java.awt.Label label_nhaplaimk1;
     private java.awt.Label label_tenTK;
     private java.awt.Label label_tenTK1;
+    private javax.swing.JLabel lbError;
+    private java.awt.Label lbHoTen;
+    private java.awt.Label lbSoHieu;
+    private javax.swing.JPasswordField txtHoTen;
+    private javax.swing.JPasswordField txtSoHieu;
     // End of variables declaration//GEN-END:variables
 }

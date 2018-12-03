@@ -3,11 +3,6 @@
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Admin\Downloads\12321321321312312.jpg"/>
-        </Property>
-      </Properties>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -63,15 +58,24 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="label_nhaplaimk1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="label_MK" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbSoHieu" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbHoTen" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="PASS_MK" min="-2" pref="245" max="-2" attributes="0"/>
+                          <Component id="txtHoTen" max="32767" attributes="0"/>
+                          <Component id="txtSoHieu" max="32767" attributes="0"/>
+                          <Component id="PASS_MK" max="32767" attributes="0"/>
                           <Component id="Pass_MK2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="145" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+              <Component id="lbError" min="-2" pref="447" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -98,12 +102,30 @@
                   </Group>
                   <Component id="Pass_MK2" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="lbSoHieu" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="txtSoHieu" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="lbHoTen" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="txtHoTen" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="button_create" min="-2" max="-2" attributes="0"/>
                   <Component id="button_cancel" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <Component id="lbError" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -128,13 +150,23 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Create"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="DangKy"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_createActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="button_cancel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Button_home"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TF_ten_TK">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_ten_TKActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Label" name="label_tenTK1">
       <Properties>
@@ -145,8 +177,36 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="PASS_MK">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PASS_MKActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="Pass_MK2">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Pass_MK2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtSoHieu">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSoHieuActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="java.awt.Label" name="lbSoHieu">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="S&#x1ed1; hi&#x1ec7;u"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtHoTen">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtHoTenActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="java.awt.Label" name="lbHoTen">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="H&#x1ecd; t&#xea;n"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbError">
     </Component>
   </SubComponents>
 </Form>
